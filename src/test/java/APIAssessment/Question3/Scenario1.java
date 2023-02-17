@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static Files.EngageData.*;
 import static io.restassured.RestAssured.given;
 
 public class Scenario1 {
@@ -12,7 +13,6 @@ public class Scenario1 {
     // Update the data in the body without “name”
 
     int id;
-    String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTEwVDE2OjUyOjExLjMzOVoiLCJ1c2VybmFtZSI6Im5pc2hhbnQucmF3YXRAM3BpbGxhcmdsb2JhbC5jb20ifQ.iZtPX8yv4kL0i-_m5D0e5FxlAS9An51OlnDGGrtSpOS-kiKPjrDOWNikVBqmGliOto1IW9w5hAQrBLx9Us3cIg";
 
     @Test
     void testPostRequest() {
@@ -24,13 +24,12 @@ public class Scenario1 {
         data1.setDescription("description data");
         data1.setDoc_link("https://jsonformatter.org/");
         data1.setLogo(9);
-        String[] asso_tags = {"Framework", "Angular", "Java"};
         data1.setAssoc_tags(asso_tags);
 
         id = given().headers("Authorization", "Bearer " + token)
-            .contentType("application/json")
+            .contentType(CONTENT_TYPE)
             .body(data1)
-            .when().post("https://stage-api-engage.3pillarglobal.com/api/technologies").jsonPath().getInt("id");
+            .when().post(url).jsonPath().getInt("id");
         System.out.println(id);
     }
 
@@ -43,13 +42,12 @@ public class Scenario1 {
         data2.setDescription("description dataa");
         data2.setDoc_link("https://jsonformatter.org/");
         data2.setLogo(8);
-        String[] asso_tags = {"Framework", "Angular", "Java"};
         data2.setAssoc_tags(asso_tags);
 
         Response res = given().headers("Authorization", "Bearer " + token)
-            .contentType("application/json")
+            .contentType(CONTENT_TYPE)
             .body(data2)
-            .when().put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id);
+            .when().put(url+ "/" + id);
         System.out.println(res.getStatusCode());
         Assert.assertEquals(res.getStatusCode(), 400);
     }
@@ -57,8 +55,8 @@ public class Scenario1 {
     @Test(dependsOnMethods = {"testPostRequest"}, priority = 3)
     void testDeleteRequest() {
         given().headers("Authorization", "Bearer " + token)
-            .contentType("application/json")
-            .when().delete("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .contentType(CONTENT_TYPE)
+            .when().delete(url + "/" + id)
             .then().statusCode(200).log().all();
     }
 }

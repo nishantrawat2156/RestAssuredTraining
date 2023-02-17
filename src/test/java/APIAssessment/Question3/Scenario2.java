@@ -3,6 +3,7 @@ package APIAssessment.Question3;
 import APIAssessment.Question2.Pojo_Post;
 import org.testng.annotations.Test;
 
+import static Files.EngageData.*;
 import static io.restassured.RestAssured.given;
 
 public class Scenario2 {
@@ -10,7 +11,6 @@ public class Scenario2 {
 //    update the data in the body without “tech_type_id”
 
     int id;
-    String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTEwVDE2OjUyOjExLjMzOVoiLCJ1c2VybmFtZSI6Im5pc2hhbnQucmF3YXRAM3BpbGxhcmdsb2JhbC5jb20ifQ.iZtPX8yv4kL0i-_m5D0e5FxlAS9An51OlnDGGrtSpOS-kiKPjrDOWNikVBqmGliOto1IW9w5hAQrBLx9Us3cIg";
 
     @Test
     void testPostRequest() {
@@ -22,13 +22,12 @@ public class Scenario2 {
         data1.setDescription("description data");
         data1.setDoc_link("https://jsonformatter.org/");
         data1.setLogo(9);
-        String[] asso_tags = {"Framework", "Angular", "Java"};
         data1.setAssoc_tags(asso_tags);
 
         id = given().headers("Authorization", "Bearer " + token)
-            .contentType("application/json")
+            .contentType(CONTENT_TYPE)
             .body(data1)
-            .when().post("https://stage-api-engage.3pillarglobal.com/api/technologies").jsonPath().getInt("id");
+            .when().post(url).jsonPath().getInt("id");
         System.out.println(id);
     }
 
@@ -41,21 +40,20 @@ public class Scenario2 {
         data2.setDescription("description data");
         data2.setDoc_link("https://jsonformatter.org/");
         data2.setLogo(9);
-        String[] asso_tags = {"Framework", "Angular", "Java", "python"};
         data2.setAssoc_tags(asso_tags);
 
         given().headers("Authorization", "Bearer " + token)
             .contentType("application/json")
             .body(data2)
-            .when().put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .when().put(url+"/" + id)
             .then().statusCode(400).log().all();
     }
 
     @Test(dependsOnMethods = {"testPostRequest"}, priority = 3)
     void testDeleteRequest() {
         given().headers("Authorization", "Bearer " + token)
-            .contentType("application/json")
-            .when().delete("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .contentType(CONTENT_TYPE)
+            .when().delete(url+"/" + id)
             .then().statusCode(200).log().all();
     }
 }
