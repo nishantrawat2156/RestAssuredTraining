@@ -9,7 +9,6 @@ import static io.restassured.RestAssured.given;
 public class Scenario3 {
 
     int id;
-   // String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTEwVDE2OjUyOjExLjMzOVoiLCJ1c2VybmFtZSI6Im5pc2hhbnQucmF3YXRAM3BpbGxhcmdsb2JhbC5jb20ifQ.iZtPX8yv4kL0i-_m5D0e5FxlAS9An51OlnDGGrtSpOS-kiKPjrDOWNikVBqmGliOto1IW9w5hAQrBLx9Us3cIg";
     String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTE0VDE0OjU1OjE4LjI1OFoiLCJ1c2VybmFtZSI6Im5pc2hhbnQucmF3YXRAM3BpbGxhcmdsb2JhbC5jb20ifQ.Z0Pi9p2I1s_3DYPXG0e-H4RMebF7RQa1R6ScMkhgcdd6659NNiYwPc8Sr9koDUpJJ6yb2ern5kHcQHeamC2LWA";
     @Test
     void testPostRequest() {
@@ -18,7 +17,7 @@ public class Scenario3 {
 
         Pojo_Post data = new Pojo_Post();
 
-        data.setName("Nishant Rawattt");
+        data.setName("Nishant Rawat");
         data.setTech_type_id(4);
         data.setDescription("description data");
         data.setDoc_link("https://jsonformatter.org/");
